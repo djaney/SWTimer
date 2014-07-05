@@ -8,6 +8,7 @@
 
 		<!-- Bootstrap -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -19,28 +20,34 @@
 	<body ng-controller="TimerCtrl">
 		<div class="container">
 
-			<div class="jumbotron text-center"><h1 class="time">{{getTimeHumanReadable()}}</h1></div>
-
-			<div class="row">
-				<div class="col-xs-12">
-					<button class="btn btn-default" ng-click="setBaseTime(60)">60 sec</button>
-					<button class="btn btn-default" ng-click="setBaseTime(120)">2 min</button>
-					<button class="btn btn-default" ng-click="setBaseTime(180)">3 min</button>
-					<button class="btn btn-default" ng-click="setBaseTime(240)">4 min</button>
-					<button class="btn btn-default" ng-click="setBaseTime(300)">5 min</button>
-					<button class="btn btn-default" ng-click="setBaseTime(360)">6 min</button>
-					<button class="btn btn-default" ng-click="resetTimer()">Reset</button>
-					<button class="btn btn-default" ng-click="startStop()">Start/Stop</button>
-				</div>
-			</div>
-
+			<div class="jumbotron text-center"><h1 class="time" ng-class="{stopped:!started,empty:timerBase-timeElapsed==0}">{{getTimeHumanReadable()}}</h1></div>
 
 		</div>
 
-		<script src="jquery.min.js"></script>
-		<script src="angular.min.js"></script>
-		<script src="script.js"></script>
+		<div class="sticky-foot">
+
+			<button class="btn btn-default btn-xs" ng-click="setBaseTime(60)">60 sec</button>
+			<button class="btn btn-default btn-xs" ng-click="setBaseTime(120)">2 min</button>
+			<button class="btn btn-default btn-xs" ng-click="setBaseTime(180)">3 min</button>
+			<button class="btn btn-default btn-xs" ng-click="setBaseTime(240)">4 min</button>
+			<button class="btn btn-default btn-xs" ng-click="setBaseTime(300)">5 min</button>
+			<button class="btn btn-default btn-xs" ng-click="setBaseTime(360)">6 min</button>
+			<button class="btn btn-default btn-xs" ng-click="resetTimer()">Reset</button>
+			<button class="btn btn-default btn-xs" ng-click="startStop()">Start/Stop</button>
+
+		</div>
+
+		<audio id='buzz'>
+		    <source src="sound/buzz.mp3" type="audio/mp3">
+		    <source src="sound/buzz.ogg" type="audio/ogg">
+		    <source src="sound/buzz.wav" type="audio/wav">
+		</audio>
+		<script src="js/underscore.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/angular.min.js"></script>
+		<script src="js/angular.audio.js"></script>
+		<script src="js/script.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 	</body>
 </html>

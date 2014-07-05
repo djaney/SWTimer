@@ -1,7 +1,8 @@
-angular.module('timer', []);
+var app = angular.module('timer', ['ngAudio']);
 
 
-function TimerCtrl($scope,$interval) {
+
+function TimerCtrl($scope,$interval,$document,ngAudio) {
 
 	var intervalPromise;
 	var timeStarted = 0;
@@ -12,23 +13,25 @@ function TimerCtrl($scope,$interval) {
 	$scope.started = false;
 
 
-
-
+	/*PRIVATE METHODS*/
 	var numberPad = function(n, width, z) {
+		n = Number(Math.floor(n)).toFixed(0);
 		z = z || '0';
 		n = n + '';
 		return String(n.length >= width ? n : new Array(width - n.length + 1).join(z) + n);
 	}
 
 	var timerStep = function(){
+		$scope.timeElapsed++;
 		if($scope.timerBase-$scope.timeElapsed<=0){
+			ngAudio.play('buzz');
 			$scope.stop();
-		}else if(tickFrom==0){
-			tickFrom = new Date().getTime();
-		}else if(new Date().getTime()-tickFrom>1000){
-			tickFrom = 0;
-			$scope.timeElapsed++;
 		}
+	};
+
+	/*PUBLIC METHODS*/
+	$scope.buzz = function(){
+		ngAudio.play('buzz');
 	};
 
 	$scope.setBaseTime = function(seconds){
@@ -39,7 +42,6 @@ function TimerCtrl($scope,$interval) {
 	$scope.resetTimer = function(){
 		$scope.stop();
 		$scope.timeElapsed = 0;
-		tickFrom = 0;
 		timeStarted = new Date().getTime();
 	};
 
@@ -61,14 +63,23 @@ function TimerCtrl($scope,$interval) {
 	};
 
 	$scope.start = function(){
-		intervalPromise = $interval(timerStep, 500);
 		$scope.started = true;
+		intervalPromise = $interval(timerStep, 1000);
 	};
 
 	$scope.stop = function(){
-		if(intervalPromise){
-			$interval.cancel(intervalPromise);
-		}
+		$interval.cancel(intervalPromise);
 		$scope.started = false;
 	};
+	/* BINDINGS */
+	$document.bind('keypress', function(event) {
+		if(event.charCode==49){// 1
+			$scope.startStop();
+		}else if(event.charCode==50){// 2
+			$scope.resetTimer();
+		}else if(event.charCode==51){// 3
+			$scope.buzz();
+		}
+		if(!$scope.$$phase) $scope.$apply();
+	})
 }
