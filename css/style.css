@@ -1,3 +1,6 @@
+body{background:#119a48;}
+.backround{background:url(images/background.png) #fff no-repeat top left;height: 525px;}
+.backround .jumbotron{background:transparent;}
 h1.time{font-size: 24em;}
 h1.time.stopped{color:#919191;}
 h1.time.empty{color:#f00;}
