@@ -1,8 +1,9 @@
-body{background:#119a48;}
-.backround{background:url(images/background.png) #fff no-repeat top left;height: 525px;}
-.backround .jumbotron{background:transparent;}
+body{background:#0053CF;}
+body,html{height:100%;overflow: hidden;}
+.backround{background:url(images/background.png) #fff no-repeat top left;min-height: 780px;}
+.backround .jumbotron{background:transparent;margin-left: 258px;}
 h1.time{font-size: 24em;}
 h1.time.stopped{color:#919191;}
-h1.time.empty{color:#f00;}
+h1.time.empty{color:#FF5200;}
 .container {margin-top: 24px;}
 .sticky-foot{position:absolute;bottom:0;right:0;}
