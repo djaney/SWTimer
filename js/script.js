@@ -2,7 +2,7 @@ var app = angular.module('timer', ['ngAudio']);
 
 
 
-function TimerCtrl($scope,$interval,$document,ngAudio) {
+function TimerCtrl($scope,$interval,$document,ngAudio,$timeout) {
 
 	var intervalPromise;
 	var timeStarted = 0;
@@ -23,15 +23,34 @@ function TimerCtrl($scope,$interval,$document,ngAudio) {
 
 	var timerStep = function(){
 		$scope.timeElapsed++;
-		if($scope.timerBase-$scope.timeElapsed<=0){
+		var remaining = $scope.timerBase-$scope.timeElapsed;
+		if(remaining<=0){
 			ngAudio.play('buzz');
 			$scope.stop();
+		}else if(remaining>0 && remaining<3){
+			ngAudio.play('beep');
+			$timeout(function(){
+				ngAudio.play('beep');
+			},333);
+			$timeout(function(){
+				ngAudio.play('beep');
+			},666);
+		}else if(remaining>=3 && remaining<10){
+			ngAudio.play('beep');
+			$timeout(function(){
+				ngAudio.play('beep');
+			},500);
+		}else{
+			ngAudio.play('beep');
 		}
 	};
 
 	/*PUBLIC METHODS*/
 	$scope.buzz = function(){
 		ngAudio.play('buzz');
+	};
+	$scope.beep = function(){
+		ngAudio.play('beep');
 	};
 
 	$scope.setBaseTime = function(seconds){
